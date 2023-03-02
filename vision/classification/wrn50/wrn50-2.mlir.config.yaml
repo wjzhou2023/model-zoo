@@ -47,3 +47,14 @@ deploy:
       --test_reference $(name)_top_outputs.npz
       --tolerance 0.92,0.8
       --model $(workdir)/$(name)_bm1684x_int8_sym.bmodel
+  - model_deploy.py --mlir $(workdir)/transformed.mlir
+      --quantize INT8
+      --asymmetric
+      --calibration_table $(home)/cali_table
+      --quant_input
+      --quant_output
+      --chip bm1684x
+      --test_input $(workdir)/$(name)_in_f32.npz
+      --test_reference $(name)_top_outputs.npz
+      --tolerance 0.92,0.79
+      --model $(workdir)/$(name)_bm1684x_int8_asym.bmodel
