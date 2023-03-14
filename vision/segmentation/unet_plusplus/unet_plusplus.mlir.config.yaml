@@ -21,7 +21,7 @@ mlir_calibration:
   run_calibration.py $(workdir)/transformed.mlir
     --dataset $(coco2017_mlir_cali_set)
     --input_num 1
-    -o $(home)/calitable
+    -o $(workdir)/$(name).cali_table
 
 deploy:
   - model_deploy.py  --mlir $(workdir)/transformed.mlir
@@ -49,7 +49,7 @@ deploy:
       --model $(workdir)/$(name)_bm1684x_bf16.bmodel
   - model_deploy.py --mlir $(workdir)/transformed.mlir
       --quantize INT8
-      --calibration_table $(home)/calitable
+      --calibration_table $(workdir)/$(name).cali_table
       --chip bm1684x
       --test_input $(workdir)/$(name)_in_f32.npz
       --test_reference $(name)_top_outputs.npz
@@ -61,7 +61,7 @@ deploy:
   - model_deploy.py --mlir $(workdir)/transformed.mlir
       --quantize INT8
       --asymmetric
-      --calibration_table $(home)/calitable
+      --calibration_table $(workdir)/$(name).cali_table
       --chip bm1684x
       --test_input $(workdir)/$(name)_in_f32.npz
       --test_reference $(name)_top_outputs.npz

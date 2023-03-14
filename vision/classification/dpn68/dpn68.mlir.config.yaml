@@ -27,7 +27,7 @@ mlir_calibration:
   run_calibration.py $(workdir)/transformed.mlir
     --dataset $(imagenet2012_mlir_cali_set)
     --input_num 100
-    -o $(home)/cali_table
+    -o $(workdir)/$(name).cali_table
 
 deploy:
   - model_deploy.py  --mlir $(workdir)/transformed.mlir
@@ -39,7 +39,7 @@ deploy:
       --model $(workdir)/$(name)_bm1684x_f32.bmodel
   - model_deploy.py --mlir $(workdir)/transformed.mlir
       --quantize INT8
-      --calibration_table $(home)/cali_table
+      --calibration_table $(workdir)/$(name).cali_table
       --quant_input
       --quant_output
       --chip bm1684x
@@ -50,7 +50,7 @@ deploy:
   - model_deploy.py --mlir $(workdir)/transformed.mlir
       --quantize INT8
       --asymmetric
-      --calibration_table $(home)/cali_table
+      --calibration_table $(workdir)/$(name).cali_table
       --quant_input
       --quant_output
       --chip bm1684x
