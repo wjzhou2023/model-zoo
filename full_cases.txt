@@ -22,6 +22,7 @@ vision/classification/mobilenet-v2
 vision/classification/InceptionBN-21k-for-Caffe
 vision/classification/ResNeXt
 vision/classification/ResNet50_vd_paddle
+vision/classification/WRN-50-2
 vision/super-resolution/SRCNN
 vision/super-resolution/VDSR
 vision/detection/ultralytics-yolov3
