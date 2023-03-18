@@ -135,6 +135,7 @@ python3 .github/workflows/check.py
 |tpu-mlir\_S-DCNet\_SHA           |[vision/visual-counting/S-DCNet](vision/visual-counting/S-DCNet)                                      |                    |:white\_check\_mark:|
 |tpu-mlir\_S-DCNet\_SHB           |[vision/visual-counting/S-DCNet](vision/visual-counting/S-DCNet)                                      |                    |:white\_check\_mark:|
 |tpu-mlir\_yoloface               |[vision/detection/yoloface](vision/detection/yoloface)                                                |                    |:white\_check\_mark:|
+|tsm                              |[vision/recognition/tsm](vision/recognition/tsm)                                                      |                    |:white\_check\_mark:|
 |ultralytics\_yolov3              |[vision/detection/ultralytics-yolov3](vision/detection/ultralytics-yolov3)                            |:white\_check\_mark:|                    |
 |unet\_plusplus                   |[vision/segmentation/unet\_plusplus](vision/segmentation/unet_plusplus)                               |:white\_check\_mark:|:white\_check\_mark:|
 |VDSR                             |[vision/super-resolution/VDSR](vision/super-resolution/VDSR)                                          |:white\_check\_mark:|                    |
