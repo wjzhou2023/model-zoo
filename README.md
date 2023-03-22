@@ -1,4 +1,4 @@
-# Open Pre-Trained Models [![Test](https://github.com/sophgo/model-zoo/actions/workflows/ci.yml/badge.svg?event=schedule)](https://github.com/sophgo/model-zoo/actions/workflows/ci.yml)
+# Open Pre-Trained Models [![Test NNTC](https://github.com/sophgo/model-zoo/actions/workflows/nntc.yml/badge.svg?branch=main&event=schedule)](https://github.com/sophgo/model-zoo/actions/workflows/nntc.yml) [![Test MLIR](https://github.com/sophgo/model-zoo/actions/workflows/mlir.yml/badge.svg?event=schedule)](https://github.com/sophgo/model-zoo/actions/workflows/mlir.yml)
 
 ## Usage - Compile and run
 
