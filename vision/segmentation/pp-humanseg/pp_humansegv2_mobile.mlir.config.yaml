@@ -1,26 +1,27 @@
 ---
 
-name: market_bot_R50
-gops: [8.12]
+name: pp_humansegv2_mobile
+gops: [1.441239204]
 shapes:
-  - [1, 3, 256, 128]
+  - [1, 3, 192, 192]
 
 mlir_transform:
   model_transform.py
     --model_name $(name)
-    --model_def $(home)/market_bot_R50.onnx
-    --test_input $(root)/dataset/samples/reid_img.jpg
+    --model_def $(home)/pp_humansegv2_mobile.onnx
+    --test_input $(root)/dataset/samples/stock_market.jpg
     --input_shapes [$(shape_param)]
+    --mean=127.5,127.5,127.5
+    --scale=0.0078431,0.0078431,0.0078431
     --pixel_format rgb
-    --tolerance 0.95,0.85
     --test_result $(name)_top_outputs.npz
     --mlir $(workdir)/transformed.mlir
 
 # mlir_calibration:
-#  run_calibration.py $(workdir)/transformed.mlir
-#    --dataset $(market1501_mlir_cali_set)
-#    --input_num 100
-#    -o $(workdir)/$(name).calitable
+#   run_calibration.py $(workdir)/transformed.mlir
+#     --dataset $(coco2017_mlir_cali_set)
+#     --input_num 100
+#     -o $(workdir)/$(name).calitable
 
 BM1684X:
   deploy:
@@ -29,7 +30,7 @@ BM1684X:
         --chip bm1684x
         --test_input $(workdir)/$(name)_in_f32.npz
         --test_reference $(name)_top_outputs.npz
-        --tolerance 0.95,0.85
+        --tolerance 0.99,0.99
         --model $(workdir)/$(name)_bm1684x_f32.bmodel
     - model_deploy.py --mlir $(workdir)/transformed.mlir
         --quantize F16
@@ -47,11 +48,11 @@ BM1684X:
         --model $(workdir)/$(name)_bm1684x_bf16.bmodel
     - model_deploy.py --mlir $(workdir)/transformed.mlir
         --quantize INT8
-        --calibration_table $(home)/$(name).calitable
+        --calibration_table $(home)/pp_humanseg_cali_table
         --chip bm1684x
         --test_input $(workdir)/$(name)_in_f32.npz
         --test_reference $(name)_top_outputs.npz
-        --tolerance 0.95,0.85
+        --tolerance 0.99,0.87
         --quant_input
         --quant_output
         --model $(workdir)/$(name)_bm1684x_int8_sym.bmodel

@@ -26,21 +26,21 @@ mlir_transform:
 #     --input_num 100 
 #     -o $(workdir)/$(name)_cali_table
 
-deploy:
-  - model_deploy.py 
-      --mlir $(workdir)/$(name).mlir 
-      --quantize F32 
-      --chip bm1684x 
-      --test_input $(workdir)/$(name)_in_f32.npz 
-      --test_reference $(workdir)/$(name)_top_outputs.npz 
-      --model $(workdir)/$(name)_1684x_f32.bmodel
-
-  - model_deploy.py 
-      --mlir $(workdir)/$(name).mlir 
-      --quantize INT8 
-      --calibration_table $(home)/cali_table 
-      --chip bm1684x 
-      --test_input $(workdir)/$(name)_in_f32.npz 
-      --test_reference $(workdir)/$(name)_top_outputs.npz 
-      --tolerance 0.85,0.45 
-      --model $(workdir)/$(name)_1684x_int8_sym.bmodel
+BM1684X:
+  deploy:
+    - model_deploy.py 
+        --mlir $(workdir)/$(name).mlir 
+        --quantize F32 
+        --chip bm1684x 
+        --test_input $(workdir)/$(name)_in_f32.npz 
+        --test_reference $(workdir)/$(name)_top_outputs.npz 
+        --model $(workdir)/$(name)_1684x_f32.bmodel
+    - model_deploy.py 
+        --mlir $(workdir)/$(name).mlir 
+        --quantize INT8 
+        --calibration_table $(home)/cali_table 
+        --chip bm1684x 
+        --test_input $(workdir)/$(name)_in_f32.npz 
+        --test_reference $(workdir)/$(name)_top_outputs.npz 
+        --tolerance 0.85,0.45 
+        --model $(workdir)/$(name)_1684x_int8_sym.bmodel

@@ -176,6 +176,65 @@ def all_model_should_be_in_cases_list(path):
         model = os.path.dirname(fn)
         assert model in full_set, f'Please add {model} to full_cases.txt'
 
+def config_filenames_should_be_standard(path):
+    mlir_fields = ['mlir_transform', 'deploy', 'mlir_calibration']
+    nntc_fields = ['fp_compile_options', 'time_only_cali', 'cali', 'bmnetu_options']
+    for fn in walk(path):
+        if not fn.endswith('config.yaml'):
+            continue
+        with open(fn) as f:
+            config = yaml.load(f, yaml.Loader)
+        has_mlir = any(f in config for f in mlir_fields)
+        has_nntc = any(f in config for f in nntc_fields)
+        assert not (has_mlir and has_nntc), \
+            f'Please don\'t place both mlir and nntc in same config file, {fn}'
+        if has_mlir:
+            assert fn.endswith('mlir.config.yaml'), \
+                f'MLIR config should be named <optionalname.>mlir.config.yaml, {fn}'
+        if has_nntc:
+            assert fn.endswith('nntc.config.yaml'), \
+                f'NNTC config should be named <optionalname.>nntc.config.yaml, {fn}'
+
+import yaml
+import re
+def target_should_be_valid_in_config(fn):
+    targets = ['BM1684', 'BM1684X']
+    patterns = [
+        '(BM|bm)1684([^a-zA-Z]|$)',
+        '(BM|bm)1684(x|X)']
+    state = None
+    def check_target(data):
+        nonlocal state
+        ok = True
+        if type(data) == dict:
+            for k, v in data.items():
+                if k in targets:
+                    assert state is None, 'Nested target field'
+                    state = k
+                ok = ok and check_target(v)
+                if not ok:
+                    print(v)
+                    return ok
+                if k in targets:
+                    state = None
+        elif type(data) == list:
+            for v in data:
+                ok = ok and check_target(v)
+        elif type(data) == str:
+            ok = ok and all(
+                not re.search(patterns[i], data)
+                for i, t in enumerate(targets)
+                if (state is None or t != state))
+        return ok
+    with open(fn) as f:
+        assert check_target(yaml.load(f, yaml.Loader)), f'Invalid target in {fn}'
+
+def target_should_be_valid(path):
+    for fn in walk(path):
+        if not fn.endswith('config.yaml'):
+            continue
+        target_should_be_valid_in_config(fn)
+
 def lint_markdowns(path):
     leaf_dir_should_have_readme(path)
     for fn in walk(path):
@@ -189,6 +248,8 @@ def main():
 
     os.chdir(path)
     for path in ['vision', 'language']:
+        config_filenames_should_be_standard(path)
+        target_should_be_valid(path)
         lint_markdowns(path)
         all_model_should_be_in_cases_list(path)
 

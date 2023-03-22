@@ -25,14 +25,15 @@ mlir_transform:
 #  --input_num 100 \
 #  -o rec_cali_table
 
-deploy:
-  - model_deploy.py 
-      --mlir $(workdir)/$(name).mlir 
-      --quantize F32 
-      --chip bm1684x 
-      --test_input $(workdir)/$(name)_in_f32.npz 
-      --test_reference $(workdir)/$(name)_top_outputs.npz 
-      --model $(workdir)/$(name)_1684x_f32.bmodel
+BM1684X:
+  deploy:
+    - model_deploy.py 
+        --mlir $(workdir)/$(name).mlir 
+        --quantize F32 
+        --chip bm1684x 
+        --test_input $(workdir)/$(name)_in_f32.npz 
+        --test_reference $(workdir)/$(name)_top_outputs.npz 
+        --model $(workdir)/$(name)_1684x_f32.bmodel
 
 #  - model_deploy.py 
 #      --mlir $(workdir)/$(name).mlir 

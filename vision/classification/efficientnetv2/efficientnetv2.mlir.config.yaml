@@ -25,43 +25,44 @@ mlir_calibration:
     --input_num 200
     -o $(home)/$(name)_cali_table
 
-deploy:
-  - model_deploy.py --mlir $(workdir)/$(name).mlir
-      --quantize F32
-      --chip bm1684x
-      --test_input $(workdir)/$(name)_in_f32.npz
-      --test_reference $(name)_top_outputs.npz
-      --tolerance 0.99,0.99
-      --model $(workdir)/$(name)_bm1684x_f32.bmodel
-  - model_deploy.py --mlir $(workdir)/$(name).mlir
-      --quantize F16
-      --chip bm1684x
-      --test_input $(workdir)/$(name)_in_f32.npz
-      --test_reference $(name)_top_outputs.npz
-      --tolerance 0.99,0.99
-      --model $(workdir)/$(name)_bm1684x_f16.bmodel
-  - model_deploy.py --mlir $(workdir)/$(name).mlir
-      --quantize INT8
-      --calibration_table $(home)/$(name)_cali_table
-      --chip bm1684x
-      --test_input $(workdir)/$(name)_in_f32.npz
-      --test_reference $(name)_top_outputs.npz
-      --tolerance 0.95,0.70
-      --model $(workdir)/$(name)_bm1684x_int8_sym.bmodel
+BM1684X:
+  deploy:
+    - model_deploy.py --mlir $(workdir)/$(name).mlir
+        --quantize F32
+        --chip bm1684x
+        --test_input $(workdir)/$(name)_in_f32.npz
+        --test_reference $(name)_top_outputs.npz
+        --tolerance 0.99,0.99
+        --model $(workdir)/$(name)_bm1684x_f32.bmodel
+    - model_deploy.py --mlir $(workdir)/$(name).mlir
+        --quantize F16
+        --chip bm1684x
+        --test_input $(workdir)/$(name)_in_f32.npz
+        --test_reference $(name)_top_outputs.npz
+        --tolerance 0.99,0.99
+        --model $(workdir)/$(name)_bm1684x_f16.bmodel
+    - model_deploy.py --mlir $(workdir)/$(name).mlir
+        --quantize INT8
+        --calibration_table $(home)/$(name)_cali_table
+        --chip bm1684x
+        --test_input $(workdir)/$(name)_in_f32.npz
+        --test_reference $(name)_top_outputs.npz
+        --tolerance 0.95,0.70
+        --model $(workdir)/$(name)_bm1684x_int8_sym.bmodel
 
-dataset:
-  image_path: $(imagenet2012_val_set)
-  image_label: $(imagenet2012_caffe_val_ground_truth)
-  mean: [123.675, 116.28, 103.53]
-  scale: [0.0171247538, 0.0175070028, 0.0174291938]
-  size: 288
-  trans: True
-  bgr2rgb: True
+  dataset:
+    image_path: $(imagenet2012_val_set)
+    image_label: $(imagenet2012_caffe_val_ground_truth)
+    mean: [123.675, 116.28, 103.53]
+    scale: [0.0171247538, 0.0175070028, 0.0174291938]
+    size: 288
+    trans: True
+    bgr2rgb: True
 
-harness:
-  type: efficientnetv2
-  args:
-    - name: FP32
-      bmodel: $(workdir)/$(name)_bm1684x_f32.bmodel
-    - name: INT8
-      bmodel: $(workdir)/$(name)_bm1684x_int8_sym.bmodel
+  harness:
+    type: efficientnetv2
+    args:
+      - name: FP32
+        bmodel: $(workdir)/$(name)_bm1684x_f32.bmodel
+      - name: INT8
+        bmodel: $(workdir)/$(name)_bm1684x_int8_sym.bmodel
