@@ -176,16 +176,30 @@ def all_model_should_be_in_cases_list(path):
         model = os.path.dirname(fn)
         assert model in full_set, f'Please add {model} to full_cases.txt'
 
-def config_filenames_should_be_standard(path):
+targets = ['BM1684', 'BM1684X']
+
+def has_toolchain(config, fields):
+    ret = any(f in config for f in fields)
+    for t in targets:
+        ret = ret or any(f in config.get(t, dict()) for f in fields)
+    return ret
+
+def has_mlir_config(config):
     mlir_fields = ['mlir_transform', 'deploy', 'mlir_calibration']
+    return has_toolchain(config, mlir_fields)
+
+def has_nntc_config(config):
     nntc_fields = ['fp_compile_options', 'time_only_cali', 'cali', 'bmnetu_options']
+    return has_toolchain(config, nntc_fields)
+
+def config_filenames_should_be_standard(path):
     for fn in walk(path):
         if not fn.endswith('config.yaml'):
             continue
         with open(fn) as f:
             config = yaml.load(f, yaml.Loader)
-        has_mlir = any(f in config for f in mlir_fields)
-        has_nntc = any(f in config for f in nntc_fields)
+        has_mlir = has_mlir_config(config)
+        has_nntc = has_nntc_config(config)
         assert not (has_mlir and has_nntc), \
             f'Please don\'t place both mlir and nntc in same config file, {fn}'
         if has_mlir:
@@ -242,16 +256,149 @@ def lint_markdowns(path):
             continue
         link_markdown(fn)
 
+def quote(v):
+    return v.replace('_', '\_')
+
+def unquote(v):
+    return v.replace('\_', '_')
+
+def row_to_key(row):
+    return '-'.join(row[:2])
+
+def gather_model_rows(path):
+    map_rows = dict()
+    for fn in walk(path):
+        if not fn.endswith('config.yaml'):
+            continue
+        with open(fn) as f:
+            config = yaml.load(f, yaml.Loader)
+
+        row = [
+            config.get('name', ''), \
+            os.path.dirname(fn), \
+            has_nntc_config(config), \
+            has_mlir_config(config)]
+        key = row_to_key(row)
+        if key in map_rows:
+            old_row = map_rows[key]
+            old_row[2] = old_row[2] or row[2]
+            old_row[3] = old_row[3] or row[3]
+        else:
+            map_rows[key] = row
+    rows = list(map_rows.values())
+    rows.sort(key=lambda x: x[0].lower())
+    return rows
+
+def rows_to_table(rows):
+    def bool_to_text(v):
+        return ':white_check_mark:' if v else ''
+    for row in rows:
+        row[2] = bool_to_text(row[2])
+        row[3] = bool_to_text(row[3])
+        path = row[1]
+        for i, col in enumerate(row):
+            row[i] = quote(col)
+        row[1] = f'[{row[1]}]({path})'
+
+    rows.insert(0, [':-'] * 4)
+    rows.insert(0, ['Model', 'Path', 'NNTC', 'MLIR'])
+
+    max_len = [0, 0, 0, 0]
+    for row in rows:
+        for i, col in enumerate(row):
+            max_len[i] = max(len(col), max_len[i])
+
+    for row in rows:
+        row_str = '|'
+        for i in range(len(row)):
+            row_str += f'{row[i]:{max_len[i]}}|'
+        print(row_str)
+
+import re
+def rows_from_readme(path):
+    rows = []
+    state = None
+    skip_count = 0
+    with open(path) as f:
+        for line in f:
+            line = line.strip(' \n')
+            if 'Navigation' in line:
+                state = 'init'
+                continue
+            if state is None:
+                continue
+            elif state == 'init' and line.count('#') == 2:
+                state = None
+                skip_count = 0
+            elif state == 'init' and line.startswith('|') and skip_count < 2:
+                skip_count += 1
+                if skip_count >= 2:
+                    state = 'in_table'
+            elif state == 'in_table' and not line.startswith('|'):
+                state = 'init'
+                skip_count = 0
+            elif state == 'in_table':
+                row = [unquote(col.strip()) for col in line.split('|')][1:-1]
+                m = re.search('\[(.+)\]', row[1])
+                assert m, f'Invalid table line in README.md, {line}'
+                row[1] = m.group(1)
+                row[2] = bool(row[2])
+                row[3] = bool(row[3])
+                rows.append(row)
+    return rows
+
+def verify_model_entrys_in_readme(rows, rows_in_readme):
+    # All README rows should be valid model
+    readme_rows_map = {row_to_key(row): row for row in rows_in_readme}
+    assert len(readme_rows_map) == len(rows_in_readme), 'Duplicate entry found in README'
+    rows_map = {row_to_key(row): row for row in rows}
+    for row in rows_in_readme:
+        key = row_to_key(row)
+        assert key in rows_map, f'Invalid entry {row[0]} | {row[1]} in README'
+        assert row == rows_map[key], f'Invalid README model entry for {row[0]} | {row[1]}'
+
+    # All models should be in README
+    remain = []
+    for row in rows:
+        key = row_to_key(row)
+        if key not in readme_rows_map:
+            remain.append(row)
+            continue
+        assert row == readme_rows_map[key], f'Invalid README model entry for {row[0]}'
+    if remain:
+        print('Models missing in README. Consider adding the rows in README.\n')
+        rows_to_table(remain)
+        print()
+        assert not remain, 'Models missing in README'
+
+def readme_should_be_aligned(readme_fn):
+    with open(readme_fn) as f:
+        read_lines = [line for line in f if line]
+    table_should_be_aligned(readme_fn, read_lines)
+
 def main():
     path = os.path.dirname(os.path.realpath(__file__))
     path = os.path.abspath(os.path.join(path, '../..'))
 
+    readme_fn = 'README.md'
+    readme_should_be_aligned(readme_fn)
+    rows_in_readme = rows_from_readme(readme_fn)
+    rows = []
+
     os.chdir(path)
     for path in ['vision', 'language']:
+
+        #print(f'\n### {path.capitalize()}\n')
+        #rows_to_table(gather_model_rows(path))
+        #continue
+
+        rows.extend(gather_model_rows(path))
         config_filenames_should_be_standard(path)
         target_should_be_valid(path)
         lint_markdowns(path)
         all_model_should_be_in_cases_list(path)
+
+    verify_model_entrys_in_readme(rows, rows_in_readme)
 
 if __name__ == '__main__':
     main()
