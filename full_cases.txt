@@ -58,6 +58,7 @@ vision/detection/retinaface
 language/nlp/bert
 language/nlp/bert_paddle
 language/asr/conformer
+language/asr/wenet
 vision/classification/AlexNet-Caffe
 vision/classification/inception_v1
 vision/classification/ECANet-Torch

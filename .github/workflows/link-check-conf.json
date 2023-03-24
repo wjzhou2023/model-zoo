@@ -5,6 +5,9 @@
     },
     {
       "pattern": "https://www.aishelltech.com"
+    },
+    {
+      "pattern": " https://proceedings.neurips.cc"
     }
   ],
   "timeout": "20s",

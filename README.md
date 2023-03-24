@@ -175,3 +175,5 @@ python3 .github/workflows/check.py
 |ScoringIds                |[language/asr/conformer](language/asr/conformer)                    |:white\_check\_mark:|                    |
 |TransformerDecoder        |[language/asr/conformer](language/asr/conformer)                    |:white\_check\_mark:|                    |
 |TransformerLM             |[language/asr/conformer](language/asr/conformer)                    |:white\_check\_mark:|                    |
+|WenetDecoder              |[language/asr/wenet](language/asr/wenet)                            |:white\_check\_mark:|                    |
+|WenetEncoder              |[language/asr/wenet](language/asr/wenet)                            |:white\_check\_mark:|                    |
