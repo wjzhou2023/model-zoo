@@ -91,6 +91,7 @@ python3 .github/workflows/check.py
 |mtcnn\_rnet                      |[vision/detection/mtcnn](vision/detection/mtcnn)                                                      |:white\_check\_mark:|:white\_check\_mark:|
 |openpose                         |[vision/pose-estimation/openpose](vision/pose-estimation/openpose)                                    |:white\_check\_mark:|:white\_check\_mark:|
 |paddle\_humansegv1\_lite         |[vision/segmentation/paddle\_humansegv1\_lite](vision/segmentation/paddle_humansegv1_lite)            |:white\_check\_mark:|                    |
+|pointpillars                     |[vision/detection/pointpillars](vision/detection/pointpillars/)                                       |                    |:white\_check\_mark:|
 |PP-OCRv3\_det                    |[vision/OCR/OCRv3\_paddle](vision/OCR/OCRv3_paddle)                                                   |                    |:white\_check\_mark:|
 |PP-OCRv3\_rec                    |[vision/OCR/OCRv3\_paddle](vision/OCR/OCRv3_paddle)                                                   |                    |:white\_check\_mark:|
 |PP-OCRv3cls                      |[vision/OCR/PP-OCRv3cls](vision/OCR/PP-OCRv3cls)                                                      |:white\_check\_mark:|                    |
