@@ -334,6 +334,7 @@ def rows_from_readme(path):
                 skip_count += 1
                 if skip_count >= 2:
                     state = 'in_table'
+                    check_order = False
             elif state == 'in_table' and not line.startswith('|'):
                 state = 'init'
                 skip_count = 0
@@ -344,6 +345,11 @@ def rows_from_readme(path):
                 row[1] = m.group(1)
                 row[2] = bool(row[2])
                 row[3] = bool(row[3])
+
+                if check_order:
+                    assert row[0].lower() > rows[-1][0].lower(), \
+                        f'Order matters, please relocate {row[0]}'
+                check_order = True
                 rows.append(row)
     return rows
 
