@@ -90,7 +90,7 @@ jobs:
 
       - name: Test
         run: |
-          .github/workflows/test.sh -m 'runtime and mlir' -t BM1684X 
+          .github/workflows/test.sh -m 'runtime and mlir' -t BM1684X \
               ${{ inputs.cases }}
         env:
           MLIR_MODEL_TAR: ${{ needs.test_build.outputs.MLIR_MODEL_TAR }}

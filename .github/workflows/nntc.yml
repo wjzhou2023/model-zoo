@@ -89,7 +89,7 @@ jobs:
 
       - name: Test
         run: |
-          .github/workflows/test.sh -m 'runtime and nntc' -t BM1684X
+          .github/workflows/test.sh -m 'runtime and nntc' -t BM1684X \
               ${{ inputs.cases }}
         env:
           NNTC_MODEL_TAR: ${{ needs.test_build.outputs.NNTC_MODEL_TAR }}
@@ -129,7 +129,7 @@ jobs:
 
       - name: Test
         run: |
-          .github/workflows/test.sh -m 'runtime and nntc' -t BM1684
+          .github/workflows/test.sh -m 'runtime and nntc' -t BM1684 \
               ${{ inputs.cases }}
         env:
           NNTC_MODEL_TAR: ${{ needs.test_build.outputs.NNTC_MODEL_TAR }}
