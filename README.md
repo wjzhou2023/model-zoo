@@ -124,7 +124,7 @@ python3 .github/workflows/check.py
 |squeezenet1.0                    |[vision/classification/squeezenet1.0](vision/classification/squeezenet1.0)                            |                    |:white\_check\_mark:|
 |SRCNN                            |[vision/super-resolution/SRCNN](vision/super-resolution/SRCNN)                                        |:white\_check\_mark:|                    |
 |ssd-mobilenet-tflite             |[vision/detection/ssd-mobilenet](vision/detection/ssd-mobilenet)                                      |                    |:white\_check\_mark:|
-|swin\_t                          |[vision/classification/SwinTransformer](vision/classification/SwinTransformer)                        |                    |:white\_check\_mark:|
+|swin\_t                          |[vision/classification/SwinTransformer](vision/classification/SwinTransformer)                        |:white\_check\_mark:|:white\_check\_mark:|
 |tpu-mlir\_S-DCNet\_SHA           |[vision/visual-counting/S-DCNet](vision/visual-counting/S-DCNet)                                      |                    |:white\_check\_mark:|
 |tpu-mlir\_S-DCNet\_SHB           |[vision/visual-counting/S-DCNet](vision/visual-counting/S-DCNet)                                      |                    |:white\_check\_mark:|
 |tpu-mlir\_yoloface               |[vision/detection/yoloface](vision/detection/yoloface)                                                |                    |:white\_check\_mark:|
