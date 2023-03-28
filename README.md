@@ -82,7 +82,7 @@ python3 .github/workflows/check.py
 |lenet                            |[vision/classification/LeNet](vision/classification/LeNet)                                            |:white\_check\_mark:|                    |
 |lprnet                           |[vision/detection/lprnet](vision/detection/lprnet)                                                    |                    |:white\_check\_mark:|
 |market\_bot\_R50                 |[vision/reid/market\_bot\_R50](vision/reid/market_bot_R50)                                            |:white\_check\_mark:|:white\_check\_mark:|
-|MDNet                            |[vision/tracking/MDNet-Torch](vision/tracking/MDNet-Torch)                                            |:white\_check\_mark:|                    |
+|MDNet                            |[vision/tracking/MDNet-Torch](vision/tracking/MDNet-Torch)                                            |:white\_check\_mark:|:white\_check\_mark:|
 |mm\_resnet50                     |[vision/classification/mm\_resnet50](vision/classification/mm_resnet50)                               |                    |:white\_check\_mark:|
 |mobilenet-v2                     |[vision/classification/mobilenet-v2](vision/classification/mobilenet-v2)                              |                    |:white\_check\_mark:|
 |mobilenet\_v1                    |[vision/classification/MobileNet-Caffe-v1](vision/classification/MobileNet-Caffe-v1)                  |:white\_check\_mark:|                    |
