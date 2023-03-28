@@ -17,8 +17,19 @@ function quiet_exec()
 }
 
 cmd="python3 -m pytest -s"
-while getopts "m:t:" arg; do
+while getopts "m:t:-:" arg; do
   case $arg in
+    -)
+      case ${OPTARG} in
+        full)
+          cases="--full"
+          ;;
+        *)
+          echo "Unsupported option --${OPTARG}"
+          exit -1
+          ;;
+      esac
+      ;;
     t)
       cmd="${cmd} --target=${OPTARG}"
       ;;
@@ -28,7 +39,7 @@ while getopts "m:t:" arg; do
   esac
 done
 
-cases=${@:$OPTIND}
+[ -z "$cases" ] && cases=${@:$OPTIND}
 if [[ ! -z $cases ]]; then
     echo "Testing \"$cases\""
     export TEST_CASES=$cases
