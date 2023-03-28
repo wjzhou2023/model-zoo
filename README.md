@@ -87,7 +87,7 @@ python3 .github/workflows/check.py
 |mm\_resnet50                     |[vision/classification/mm\_resnet50](vision/classification/mm_resnet50)                               |                    |:white\_check\_mark:|
 |mobilenet-v2                     |[vision/classification/mobilenet-v2](vision/classification/mobilenet-v2)                              |                    |:white\_check\_mark:|
 |mobilenet\_v1                    |[vision/classification/MobileNet-Caffe-v1](vision/classification/MobileNet-Caffe-v1)                  |:white\_check\_mark:|                    |
-|mobilenetv2                      |[vision/classification/MobileNet-Caffe-v2](vision/classification/MobileNet-Caffe-v2)                  |:white\_check\_mark:|                    |
+|mobilenetv2                      |[vision/classification/MobileNet-Caffe-v2](vision/classification/MobileNet-Caffe-v2)                  |:white\_check\_mark:|:white\_check\_mark:|
 |mobilenetv3                      |[vision/classification/MobileNet-Caffe-v3](vision/classification/MobileNet-Caffe-v3)                  |:white\_check\_mark:|                    |
 |mobileseg                        |[vision/segmentation/mobileseg](vision/segmentation/mobileseg)                                        |:white\_check\_mark:|                    |
 |mobileseg-mlir                   |[vision/segmentation/mobileseg](vision/segmentation/mobileseg)                                        |                    |:white\_check\_mark:|
