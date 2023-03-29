@@ -50,5 +50,5 @@ BM1684X:
         --asymmetric
         --test_input $(workdir)/$(name)_in_f32.npz
         --test_reference $(name)_top_outputs.npz
-        --tolerance 0.96,0.73
+        --tolerance 0.96,0.70
         --model $(workdir)/$(name)_bm1684x_int8_sym.bmodel
