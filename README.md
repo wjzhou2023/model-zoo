@@ -67,7 +67,7 @@ python3 .github/workflows/check.py
 |efficientnet-lite4               |[vision/classification/efficientnet-lite4](vision/classification/efficientnet-lite4)                  |                    |:white\_check\_mark:|
 |efficientnetv2                   |[vision/classification/efficientnetv2](vision/classification/efficientnetv2)                          |:white\_check\_mark:|:white\_check\_mark:|
 |ERFNet                           |[vision/segmentation/ERFNet-Caffe](vision/segmentation/ERFNet-Caffe)                                  |:white\_check\_mark:|                    |
-|face_alignment                   |[vision/recognition/face_alignment](vision/recognition/face_alignment)                                |                    |:white\_check\_mark:|
+|face\_alignment                  |[vision/recognition/face\_alignment](vision/recognition/face_alignment)                               |                    |:white\_check\_mark:|
 |facenet                          |[vision/recognition/facenet](vision/recognition/facenet)                                              |:white\_check\_mark:|                    |
 |GOTURN                           |[vision/tracking/GOTURN-Caffe](vision/tracking/GOTURN-Caffe)                                          |:white\_check\_mark:|                    |
 |HRNet                            |[vision/classification/HRNet-Torch](vision/classification/HRNet-Torch)                                |:white\_check\_mark:|                    |
@@ -110,6 +110,8 @@ python3 .github/workflows/check.py
 |ppyolov2\_r101vd\_dcn\_365e\_coco|[vision/detection/ppyolo](vision/detection/ppyolo)                                                    |:white\_check\_mark:|                    |
 |py-R-FCN                         |[vision/detection/py-R-FCN](vision/detection/py-R-FCN)                                                |:white\_check\_mark:|                    |
 |resnet18-v1-7                    |[vision/classification/resnet18-v1-7](vision/classification/resnet18-v1-7)                            |                    |:white\_check\_mark:|
+|res2net101\_26w\_4s              |[vision/classification/res2net101\_26w\_4s](vision/classification/res2net101_26w_4s)                  |                    |:white\_check\_mark:|
+|res2net50\_26w\_4s               |[vision/classification/res2net50\_26w\_4s](vision/classification/res2net50_26w_4s)                    |                    |:white\_check\_mark:|
 |resnet18-v2                      |[vision/classification/resnet18-v2](vision/classification/resnet18-v2)                                |                    |:white\_check\_mark:|
 |resnet34                         |[vision/classification/ResNet34](vision/classification/ResNet34)                                      |:white\_check\_mark:|                    |
 |resnet34-v1-7                    |[vision/classification/resnet34-v1-7](vision/classification/resnet34-v1-7)                            |                    |:white\_check\_mark:|

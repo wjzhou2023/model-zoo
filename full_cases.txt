@@ -25,6 +25,8 @@ vision/classification/ResNet50_vd_paddle
 vision/classification/resnet18-v1-7
 vision/classification/resnet34-v1-7
 vision/classification/resnet50-v1-7
+vision/classification/res2net50_26w_4s
+vision/classification/res2net101_26w_4s
 vision/classification/WRN-50-2
 vision/super-resolution/SRCNN
 vision/super-resolution/VDSR
