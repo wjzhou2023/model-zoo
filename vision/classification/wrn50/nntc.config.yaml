@@ -43,12 +43,14 @@ BM1684X:
       fp_outdir_template: "dynamic.opt2.fp32.{}b.compilation"
       prec: FP32
     - build_env:
+        - BMCOMPILER_LAYER_DTYPE_MODE=auto
         - BMCOMPILER_GROUP_SEARCH_COUNT=1
       opt: "1"
       dyn: "False"
       fp_outdir_template: "static.opt1.fp16.{}b.compilation"
       prec: FP16
     - build_env:
+        - BMCOMPILER_LAYER_DTYPE_MODE=auto
         - BMCOMPILER_GROUP_SEARCH_COUNT=1
       opt: "2"
       dyn: "True"
@@ -56,10 +58,14 @@ BM1684X:
       prec: FP16
 
 int8_loops:
-  - opt: "1"
+  - build_env:
+      - BMCOMPILER_GROUP_SEARCH_COUNT=1
+    opt: "1"
     dyn: "False"
     int8_outdir_template: "static.opt1.int8.{}b.compilation"
-  - opt: "2"
+  - build_env:
+      - BMCOMPILER_GROUP_SEARCH_COUNT=1
+    opt: "2"
     dyn: "True"
     int8_outdir_template: "dynamic.opt2.int8.{}b.compilation"
 
