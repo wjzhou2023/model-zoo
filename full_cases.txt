@@ -101,3 +101,4 @@ vision/visual-counting/S-DCNet
 vision/classification/SwinTransformer
 vision/detection/lprnet
 vision/recognition/tsm
+language/nlp/Huggingface_bert_squadv1
