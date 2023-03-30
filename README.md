@@ -67,6 +67,7 @@ python3 .github/workflows/check.py
 |efficientnet-lite4               |[vision/classification/efficientnet-lite4](vision/classification/efficientnet-lite4)                  |                    |:white\_check\_mark:|
 |efficientnetv2                   |[vision/classification/efficientnetv2](vision/classification/efficientnetv2)                          |:white\_check\_mark:|:white\_check\_mark:|
 |ERFNet                           |[vision/segmentation/ERFNet-Caffe](vision/segmentation/ERFNet-Caffe)                                  |:white\_check\_mark:|                    |
+|face_alignment                   |[vision/recognition/face_alignment](vision/recognition/face_alignment)                                |                    |:white\_check\_mark:|
 |facenet                          |[vision/recognition/facenet](vision/recognition/facenet)                                              |:white\_check\_mark:|                    |
 |GOTURN                           |[vision/tracking/GOTURN-Caffe](vision/tracking/GOTURN-Caffe)                                          |:white\_check\_mark:|                    |
 |HRNet                            |[vision/classification/HRNet-Torch](vision/classification/HRNet-Torch)                                |:white\_check\_mark:|                    |
