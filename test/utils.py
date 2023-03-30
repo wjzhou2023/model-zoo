@@ -24,4 +24,7 @@ def container_run(nntc_env, cmd):
     assert ret == 0
 
 def get_devices_opt():
-    return ' --devices ' + os.environ.get('DEVICES', '')
+    if 'DEVICES' in os.environ:
+        return ' --devices ' + os.environ['DEVICES']
+    else:
+        return ''
