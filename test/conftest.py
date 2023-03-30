@@ -290,6 +290,7 @@ def mlir_docker(latest_tpu_perf_whl):
         volumes=[f'{root}:/workspace'],
         restart_policy={'Name': 'always'},
         environment=[
+            f'TPUC_ROOT=/workspace/{mlir_dir}',
             f'PATH=/workspace/{mlir_dir}/bin:' \
             f'/workspace/{mlir_dir}/python/tools:' \
             f'/workspace/{mlir_dir}/python/utils:' \
@@ -314,10 +315,12 @@ def mlir_docker(latest_tpu_perf_whl):
 
     # Pack bmodels for runtime jobs
     model_tar = f'MLIR_{uuid.uuid4()}.tar'
-    for target in ['BM1684X']:
+    for target in ['BM1684', 'BM1684X']:
         relative_fns = set()
-        for dirpath, dirnames, filenames in os.walk('mlir_out'):
+        for dirpath, dirnames, filenames in os.walk(f'mlir_out_{target}'):
             for fn in filenames:
+                if fn.endswith('compilation.bmodel'):
+                    continue
                 if fn.endswith('.bmodel') or fn.endswith('profile_0.txt'):
                     relative_fns.add(os.path.join(dirpath, fn))
                 if fn.endswith('.dat'):
@@ -502,7 +505,7 @@ def runtime_dependencies(latest_tpu_perf_whl):
 @pytest.fixture(scope='session')
 def mlir_runtime(runtime_dependencies, target, case_list):
     model_tar = read_github_output('MLIR_MODEL_TAR')
-    assert model_tar
+    assert model_tar, 'Model tar is empty'
     download_bmodel(target, model_tar)
     logging.info(f'Running cases "{case_list}"')
 
@@ -518,7 +521,7 @@ def mlir_runtime(runtime_dependencies, target, case_list):
 @pytest.fixture(scope='session')
 def nntc_runtime(runtime_dependencies, target, case_list):
     model_tar = read_github_output('NNTC_MODEL_TAR')
-    assert model_tar
+    assert model_tar, 'Model tar is empty'
     download_bmodel(target, model_tar)
     logging.info(f'Running cases "{case_list}"')
 
