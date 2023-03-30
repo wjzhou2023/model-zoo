@@ -55,7 +55,7 @@ python3 .github/workflows/check.py
 |CenterNet                        |[vision/detection/CenterNet-Torch](vision/detection/CenterNet-Torch)                                  |:white\_check\_mark:|                    |
 |CRNN                             |[vision/OCR/CRNN](vision/OCR/CRNN)                                                                    |:white\_check\_mark:|                    |
 |cyclegan\_horse2zebra            |[vision/GAN/cyclegan](vision/GAN/cyclegan)                                                            |:white\_check\_mark:|                    |
-|deeplabv3p                       |[vision/segmentation/deeplabv3p](vision/segmentation/deeplabv3p)                                      |:white\_check\_mark:|                    |
+|deeplabv3p                       |[vision/segmentation/deeplabv3p](vision/segmentation/deeplabv3p)                                      |:white\_check\_mark:|:white\_check\_mark:|
 |densenet                         |[vision/classification/DenseNet-Caffe](vision/classification/DenseNet-Caffe)                          |:white\_check\_mark:|                    |
 |dpn68                            |[vision/classification/dpn68](vision/classification/dpn68)                                            |:white\_check\_mark:|:white\_check\_mark:|
 |ECANet                           |[vision/classification/ECANet-Torch](vision/classification/ECANet-Torch)                              |:white\_check\_mark:|                    |
