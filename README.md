@@ -109,9 +109,9 @@ python3 .github/workflows/check.py
 |ppyoloe\_plus\_crn\_x\_80e\_coco |[vision/detection/ppyoloe](vision/detection/ppyoloe)                                                  |:white\_check\_mark:|                    |
 |ppyolov2\_r101vd\_dcn\_365e\_coco|[vision/detection/ppyolo](vision/detection/ppyolo)                                                    |:white\_check\_mark:|                    |
 |py-R-FCN                         |[vision/detection/py-R-FCN](vision/detection/py-R-FCN)                                                |:white\_check\_mark:|                    |
-|resnet18-v1-7                    |[vision/classification/resnet18-v1-7](vision/classification/resnet18-v1-7)                            |                    |:white\_check\_mark:|
 |res2net101\_26w\_4s              |[vision/classification/res2net101\_26w\_4s](vision/classification/res2net101_26w_4s)                  |                    |:white\_check\_mark:|
 |res2net50\_26w\_4s               |[vision/classification/res2net50\_26w\_4s](vision/classification/res2net50_26w_4s)                    |                    |:white\_check\_mark:|
+|resnet18-v1-7                    |[vision/classification/resnet18-v1-7](vision/classification/resnet18-v1-7)                            |                    |:white\_check\_mark:|
 |resnet18-v2                      |[vision/classification/resnet18-v2](vision/classification/resnet18-v2)                                |                    |:white\_check\_mark:|
 |resnet34                         |[vision/classification/ResNet34](vision/classification/ResNet34)                                      |:white\_check\_mark:|                    |
 |resnet34-v1-7                    |[vision/classification/resnet34-v1-7](vision/classification/resnet34-v1-7)                            |                    |:white\_check\_mark:|
