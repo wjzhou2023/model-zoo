@@ -58,6 +58,7 @@ python3 .github/workflows/check.py
 |clip                             |[vision/classification/clip-mlir](vision/classification/clip-mlir)                                    |                    |:white\_check\_mark:|
 |CRNN                             |[vision/OCR/CRNN](vision/OCR/CRNN)                                                                    |:white\_check\_mark:|                    |
 |cyclegan\_horse2zebra            |[vision/GAN/cyclegan](vision/GAN/cyclegan)                                                            |:white\_check\_mark:|                    |
+|dbnet                            |[vision/detection/dbnet](vision/detection/dbnet)                                                      |:white\_check\_mark:|:white\_check\_mark:|
 |DBNet\_totaltext\_res18\_dcn     |[vision/OCR/DBNet](vision/OCR/DBNet)                                                                  |:white\_check\_mark:|:white\_check\_mark:|
 |DBNet\_totaltext\_res50\_dcn     |[vision/OCR/DBNet](vision/OCR/DBNet)                                                                  |:white\_check\_mark:|:white\_check\_mark:|
 |deeplabv3p                       |[vision/segmentation/deeplabv3p](vision/segmentation/deeplabv3p)                                      |:white\_check\_mark:|:white\_check\_mark:|

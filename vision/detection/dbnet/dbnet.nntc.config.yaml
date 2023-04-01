@@ -1,0 +1,62 @@
+---
+name: dbnet
+model: $(home)/inference
+dataset_path: $(home)/data/icdar2015
+output_path: $(root)/output/$(name)/inference
+time: true
+precision: true
+gops: [5.255]
+
+div_info: div=0.229:0.224:0.225
+mean_info: mean_value=0.485:0.456:0.406
+size_info: resize_h=736,resize_w=1280;scale=0.00392156862
+fp_batch_sizes: [1]
+
+fp_loops:
+  - build_env:
+      - BMCOMPILER_LAYER_DTYPE_MODE=
+    fp_outdir_template: "{}b.fp32.compilation"
+
+BM1684X:
+  fp_compile_options:
+    python3 -m bmpaddle
+        --model=$(model)
+        --shapes [4,3,736,1280]
+        --net_name $(name)
+        --target BM1684X
+        --cmp=False
+        --enable_profile True
+
+  #  time_only_cali:
+  #    python3 -u -m ufw.cali.cali_model
+  #      --net_name $(name)
+  #      --model $(model)/inference.pdmodel
+  #      --input_shapes [1,3,736,1280]
+  #    --cali_image_preprocess '$(size_info),$(mean_info),$(div_info),bgr2rgb=1'
+  #      --cali_image_path $(dataset_path)/ch4_quanti_data
+  #      --debug_cmd='to_umodel_not_cmp;quant_1684X;not_suspend;not_call_bmnetu'
+  #      --target=BM1684X
+  #      --cali_iterations 1
+  #      --test_iterations 1
+  #      --input_names "x"
+  #      --output_names "sigmoid_0.tmp_0"
+
+  #  bmnetu_batch_sizes: [1]
+
+  #  int8_model: $(workdir)/$(name)_bmpaddle_deploy_int8_unique_top.prototxt
+  #  int8_weight: $(workdir)/$(name)_bmpaddle.int8umodel
+
+  #  bmnetu_options:
+  #    --model $(int8_model)
+  #    --weight $(int8_weight)
+  #    --net_name $(name)
+  #    --target BM1684X
+  #    --cmp=False
+  #    --v=4
+  #    --opt 2
+  #    --output_as_fp32 sigmoid_0.tmp_0
+  #    --seed=42
+  #    --enable_profile=True
+
+  build_env:
+    - BMCOMPILER_EXPORT_GRAPH=1

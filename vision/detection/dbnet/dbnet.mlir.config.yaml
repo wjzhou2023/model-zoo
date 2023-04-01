@@ -1,0 +1,46 @@
+---
+name: dbnet
+icdar_dataset: $(home)/data/icdar2015
+gops: [5.255]
+
+mlir_transform:
+  model_transform.py
+    --model_name $(name)
+    --model_def $(home)/$(name).onnx
+    --output_names="sigmoid_0.tmp_0"
+    --input_shapes="[[2,3,736,1280]]"
+    --mlir $(name).mlir
+    --mean 123.93,116.28,103.53
+    --scale 0.01712475383,0.0175070028,0.01742919389
+    --pixel_format rgb
+    --test_input $(icdar_dataset)/ch4_quanti_data/img_1.jpg
+    --test_result $(workdir)/$(name)_top_outputs.npz
+
+deploy:
+  - model_deploy.py
+     --mlir $(workdir)/$(name).mlir
+     --quantize F32
+     --chip $(target)
+     --test_input=$(workdir)/$(name)_in_f32.npz
+     --test_reference=$(workdir)/$(name)_top_outputs.npz
+     --tolerance 0.99,0.99
+     --model $(workdir)/$(name)_$(target)_f32.bmodel
+
+BM1684X:
+  +deploy:
+    - model_deploy.py
+        --mlir $(workdir)/$(name).mlir
+        --quantize F16
+        --chip bm1684x
+        --test_input=$(workdir)/$(name)_in_f32.npz
+        --test_reference=$(workdir)/$(name)_top_outputs.npz
+        --tolerance 0.95,0.85
+        --model $(workdir)/$(name)_bm1684x_f16.bmodel
+#   - model_deploy.py
+#     --mlir $(workdir)/$(name).mlir
+#     --quantize BF16
+#     --chip bm1684x
+#     --test_input=$(workdir)/$(name)_in_f32.npz
+#     --test_reference=$(workdir)/$(name)_top_outputs.npz
+#     --tolerance 0.93,0.65
+#     --model $(workdir)/$(name)_bm1684x_bf16.bmodel
