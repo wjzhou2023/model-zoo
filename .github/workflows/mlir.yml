@@ -82,7 +82,7 @@ jobs:
 
       - name: LFS Pull
         run: |
-          git lfs pull --exclude '' --include 'dataset/ILSVRC2012/*'
+          git lfs pull --exclude '' --include 'dataset/*'
 
       - name: Set Optional Env
         if: "${{ github.event_name == 'schedule' || \
@@ -120,6 +120,10 @@ jobs:
           fetch-depth: 0
           clean: false
           lfs: false
+
+      - name: LFS Pull
+        run: |
+          git lfs pull --exclude '' --include 'dataset/*'
 
       - name: Set Optional Env
         if: "${{ github.event_name == 'schedule' || \
