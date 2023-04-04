@@ -105,7 +105,8 @@ class SGRunner(object):
         receiver = threading.Thread(target=self.wait_result)
         receiver.start()
 
-        bar = trange(0, len(query_samples[0]), self.batch_size)
+        noninteractive = 'GITHUB_OUTPUT' in os.environ
+        bar = trange(0, len(query_samples[0]), self.batch_size, disable=noninteractive)
         for idx in bar:
             task_id = 0
             input_ids_data = query_samples[0][idx: idx + self.batch_size]
