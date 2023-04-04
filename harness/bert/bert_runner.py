@@ -3,6 +3,7 @@ import time
 import logging
 
 import numpy as np
+import os
 from tqdm import trange
 
 try:
