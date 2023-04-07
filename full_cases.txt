@@ -102,3 +102,4 @@ vision/classification/SwinTransformer
 vision/detection/lprnet
 vision/recognition/tsm
 language/nlp/Huggingface_bert_squadv1
+vision/classification/resnet50-v1.5

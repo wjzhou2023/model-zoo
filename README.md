@@ -73,6 +73,7 @@ python3 .github/workflows/check.py
 |facenet                          |[vision/recognition/facenet](vision/recognition/facenet)                                              |:white\_check\_mark:|                    |
 |GOTURN                           |[vision/tracking/GOTURN-Caffe](vision/tracking/GOTURN-Caffe)                                          |:white\_check\_mark:|                    |
 |HRNet                            |[vision/classification/HRNet-Torch](vision/classification/HRNet-Torch)                                |:white\_check\_mark:|                    |
+|huggingface-resnet50             |[vision/classification/resnet50-v1.5](vision/classification/resnet50-v1.5)                            |:white\_check\_mark:|                    |
 |inception\_resnet\_v2            |[vision/classification/inception\_resnet\_v2](vision/classification/inception_resnet_v2)              |:white\_check\_mark:|                    |
 |inception\_v1                    |[vision/classification/inception\_v1](vision/classification/inception_v1)                             |:white\_check\_mark:|                    |
 |inception\_v3                    |[vision/classification/inception\_v3](vision/classification/inception_v3)                             |:white\_check\_mark:|                    |
