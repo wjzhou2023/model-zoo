@@ -114,13 +114,13 @@ python3 .github/workflows/check.py
 |py-R-FCN                         |[vision/detection/py-R-FCN](vision/detection/py-R-FCN)                                                |:white\_check\_mark:|                    |
 |res2net101\_26w\_4s              |[vision/classification/res2net101\_26w\_4s](vision/classification/res2net101_26w_4s)                  |                    |:white\_check\_mark:|
 |res2net50\_26w\_4s               |[vision/classification/res2net50\_26w\_4s](vision/classification/res2net50_26w_4s)                    |                    |:white\_check\_mark:|
-|resnet18-v1-7                    |[vision/classification/resnet18-v1-7](vision/classification/resnet18-v1-7)                            |                    |:white\_check\_mark:|
+|resnet18-v1-7                    |[vision/classification/resnet18-v1-7](vision/classification/resnet18-v1-7)                            |:white\_check\_mark:|:white\_check\_mark:|
 |resnet18-v2                      |[vision/classification/resnet18-v2](vision/classification/resnet18-v2)                                |                    |:white\_check\_mark:|
 |resnet34                         |[vision/classification/ResNet34](vision/classification/ResNet34)                                      |:white\_check\_mark:|                    |
-|resnet34-v1-7                    |[vision/classification/resnet34-v1-7](vision/classification/resnet34-v1-7)                            |                    |:white\_check\_mark:|
+|resnet34-v1-7                    |[vision/classification/resnet34-v1-7](vision/classification/resnet34-v1-7)                            |:white\_check\_mark:|:white\_check\_mark:|
 |resnet50                         |[vision/classification/mm\_resnet50](vision/classification/mm_resnet50)                               |:white\_check\_mark:|                    |
 |resnet50-caffe                   |[vision/classification/ResNet50-Caffe](vision/classification/ResNet50-Caffe)                          |:white\_check\_mark:|                    |
-|resnet50-v1-7                    |[vision/classification/resnet50-v1-7](vision/classification/resnet50-v1-7)                            |                    |:white\_check\_mark:|
+|resnet50-v1-7                    |[vision/classification/resnet50-v1-7](vision/classification/resnet50-v1-7)                            |:white\_check\_mark:|:white\_check\_mark:|
 |resnet50-v2                      |[vision/classification/resnet50-v2](vision/classification/resnet50-v2)                                |                    |:white\_check\_mark:|
 |ResNet50\_vd\_infer              |[vision/classification/ResNet50\_vd\_paddle](vision/classification/ResNet50_vd_paddle)                |                    |:white\_check\_mark:|
 |resnext                          |[vision/classification/ResNeXt](vision/classification/ResNeXt)                                        |:white\_check\_mark:|                    |
