@@ -42,12 +42,13 @@ BM1684X:
     image_label: $(imagenet2012_caffe_val_ground_truth)
     mean: [123.68, 116.78, 103.94]
     scale: [0.017, 0.017, 0.017]
+    resize_dims: 256
     size: 224
     trans: True
     bgr2rgb: True
 
   harness:
-    type: efficientnetv2
+    type: topk
     args:
       - name: F32
         bmodel: $(root)/output/swin_t-1x3x224x224/swin_t_bm1684x_f32/ \
