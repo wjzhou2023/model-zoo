@@ -18,21 +18,23 @@ mlir_transform:
     --test_result $(name)_top_outputs.npz
     --mlir $(workdir)/transformed.mlir
 
-# mlir_calibration:
-#   run_calibration.py $(workdir)/transformed.mlir
-#     --dataset $(coco2017_mlir_cali_set)
-#     --input_num 100
-#     -o $(workdir)/$(name).calitable
+mlir_calibration:
+  run_calibration.py $(workdir)/transformed.mlir
+    --dataset $(coco2017_mlir_cali_set)
+    --input_num 100
+    -o $(workdir)/$(name).calitable
+
+deploy:
+  - model_deploy.py  --mlir $(workdir)/transformed.mlir
+      --quantize F32
+      --chip $(target)
+      --test_input $(workdir)/$(name)_in_f32.npz
+      --test_reference $(name)_top_outputs.npz
+      --tolerance 0.99,0.99
+      --model $(workdir)/$(name)_$(target)_f32.bmodel
 
 BM1684X:
-  deploy:
-    - model_deploy.py  --mlir $(workdir)/transformed.mlir
-        --quantize F32
-        --chip bm1684x
-        --test_input $(workdir)/$(name)_in_f32.npz
-        --test_reference $(name)_top_outputs.npz
-        --tolerance 0.99,0.99
-        --model $(workdir)/$(name)_bm1684x_f32.bmodel
+  +deploy:
     - model_deploy.py --mlir $(workdir)/transformed.mlir
         --quantize F16
         --chip bm1684x
@@ -47,3 +49,16 @@ BM1684X:
         --test_reference $(name)_top_outputs.npz
         --tolerance 0.95,0.85
         --model $(workdir)/$(name)_bm1684x_bf16.bmodel
+
+BM1684:
+  +deploy:
+    - model_deploy.py --mlir $(workdir)/transformed.mlir
+        --quantize INT8
+        --chip bm1684
+        --test_input $(workdir)/$(name)_in_f32.npz
+        --test_reference $(name)_top_outputs.npz
+        --quant_input
+        --quant_output
+        --calibration_table $(workdir)/$(name).calitable
+        --tolerance 0.87,0.47
+        --model $(workdir)/$(name)_bm1684_int8.bmodel

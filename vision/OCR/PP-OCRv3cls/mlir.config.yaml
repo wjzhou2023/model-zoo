@@ -1,14 +1,14 @@
 ---
 
-name: PP-OCRv3rec
-gops: 1.347
+name: PP-OCRv3cls
+gops: 3.9
 shapes:
-  - [1, 3, 48, 320]
+  - [1, 3, 48, 192]
 
 mlir_transform:
   model_transform.py
     --model_name $(name)
-    --model_def $(home)/ch_PP-OCRv3_rec_infer.onnx
+    --model_def $(home)/ch_ppocr_mobile_v2.0_cls_infer.onnx
     --test_input $(root)/dataset/samples/ocr_gt.jpg
     --input_shapes [$(shape_param)]
     --keep_aspect_ratio
@@ -30,16 +30,7 @@ deploy:
       --test_reference $(name)_top_outputs.npz
       --tolerance 0.99,0.99
       --model $(workdir)/$(name)_$(target)_f32.bmodel
-
-BM1684X:
-  +deploy:
-    - model_deploy.py --mlir $(workdir)/transformed.mlir
-        --quantize F16
-        --chip bm1684x
-        --test_input $(workdir)/$(name)_in_f32.npz
-        --test_reference $(name)_top_outputs.npz
-        --tolerance 0.95,0.85
-        --model $(workdir)/$(name)_bm1684x_f16.bmodel
+  
 
 BM1684:
   +deploy:
@@ -51,5 +42,5 @@ BM1684:
         --quant_input
         --quant_output
         --calibration_table $(workdir)/$(name).calitable
-        --tolerance 0.91,0.56
+        --tolerance 0.97,0.76
         --model $(workdir)/$(name)_bm1684_int8.bmodel

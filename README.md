@@ -101,7 +101,7 @@ python3 .github/workflows/check.py
 |pointpillars                     |[vision/detection/pointpillars](vision/detection/pointpillars/)                                       |                    |:white\_check\_mark:|
 |PP-OCRv3\_det                    |[vision/OCR/OCRv3\_paddle](vision/OCR/OCRv3_paddle)                                                   |                    |:white\_check\_mark:|
 |PP-OCRv3\_rec                    |[vision/OCR/OCRv3\_paddle](vision/OCR/OCRv3_paddle)                                                   |                    |:white\_check\_mark:|
-|PP-OCRv3cls                      |[vision/OCR/PP-OCRv3cls](vision/OCR/PP-OCRv3cls)                                                      |:white\_check\_mark:|                    |
+|PP-OCRv3cls                      |[vision/OCR/PP-OCRv3cls](vision/OCR/PP-OCRv3cls)                                                      |:white\_check\_mark:|:white\_check\_mark:|
 |PP-OCRv3det                      |[vision/OCR/PP-OCRv3det](vision/OCR/PP-OCRv3det)                                                      |:white\_check\_mark:|:white\_check\_mark:|
 |PP-OCRv3rec                      |[vision/OCR/PP-OCRv3rec](vision/OCR/PP-OCRv3rec)                                                      |                    |:white\_check\_mark:|
 |pp\_humansegv1\_lite\_argmax     |[vision/segmentation/pp\_humansegv1\_lite](vision/segmentation/pp_humansegv1_lite)                    |:white\_check\_mark:|                    |
