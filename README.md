@@ -150,6 +150,8 @@ python3 .github/workflows/check.py
 |vgg19                            |[vision/classification/vgg19](vision/classification/vgg19)                                            |:white\_check\_mark:|                    |
 |vggssd\_300                      |[vision/detection/vggssd\_300](vision/detection/vggssd_300)                                           |:white\_check\_mark:|                    |
 |vision\_OCR\_CRNN\_tpu-mlir      |[vision/OCR/CRNN](vision/OCR/CRNN)                                                                    |                    |:white\_check\_mark:|
+|vit-base-patch16-384             |[vision/classification/vit_B_16](vision/classification/vit_B_16)                                      |:white\_check\_mark:|                    |
+|vit-large-patch16-384            |[vision/classification/vit_L_16](vision/classification/vit_L_16)                                      |:white\_check\_mark:|                    |
 |WRN-50-2                         |[vision/classification/WRN-50-2](vision/classification/WRN-50-2)                                      |:white\_check\_mark:|:white\_check\_mark:|
 |wrn50                            |[vision/classification/wrn50](vision/classification/wrn50)                                            |:white\_check\_mark:|:white\_check\_mark:|
 |xception                         |[vision/classification/xception](vision/classification/xception)                                      |:white\_check\_mark:|                    |
