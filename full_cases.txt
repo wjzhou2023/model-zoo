@@ -110,3 +110,4 @@ vision/classification/vit_B_16
 vision/classification/vit_L_16
 vision/classification/clip-mlir
 vision/video-recognition/TSN
+vision/segmentation/BiSeNet
