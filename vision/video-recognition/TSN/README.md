@@ -19,6 +19,7 @@ Temporal Segment Networks: Towards Good Practices for Deep Action Recognition.
 ## References
 
 [TSN](https://github.com/yjxiong/temporal-segment-networks)
+[mmaction2-TSN](https://github.com/open-mmlab/mmaction2/blob/main/configs/recognition/tsn/README.md)
 
 ## License
 
