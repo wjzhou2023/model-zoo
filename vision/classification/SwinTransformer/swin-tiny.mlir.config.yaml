@@ -27,29 +27,29 @@ mlir_transform:
     --test_result $(name)_top_outputs.npz
     --mlir $(workdir)/transformed.mlir
 
-BM1684X:
-  deploy:
-    - model_deploy.py --mlir $(workdir)/transformed.mlir
-        --quantize F32
-        --chip bm1684x
-        --test_input $(workdir)/$(name)_in_f32.npz
-        --test_reference $(name)_top_outputs.npz
-        --tolerance 0.99,0.99
-        --model $(workdir)/$(name)_bm1684x_f32.bmodel
 
-  dataset:
-    image_path: $(imagenet2012_val_set)
-    image_label: $(imagenet2012_caffe_val_ground_truth)
-    mean: [123.68, 116.78, 103.94]
-    scale: [0.017, 0.017, 0.017]
-    resize_dims: 256
-    size: 224
-    trans: True
-    bgr2rgb: True
+deploy:
+  - model_deploy.py --mlir $(workdir)/transformed.mlir
+      --quantize F32
+      --chip $(target)
+      --test_input $(workdir)/$(name)_in_f32.npz
+      --test_reference $(name)_top_outputs.npz
+      --tolerance 0.99,0.99
+      --compare_all
+      --model $(workdir)/$(name)_$(target)_f32.bmodel
 
-  harness:
-    type: topk
-    args:
-      - name: F32
-        bmodel: $(root)/output/swin_t-1x3x224x224/swin_t_bm1684x_f32/ \
-          compilation.bmodel
+dataset:
+  image_path: $(imagenet2012_val_set)
+  image_label: $(imagenet2012_caffe_val_ground_truth)
+  mean: [123.68, 116.78, 103.94]
+  scale: [0.017, 0.017, 0.017]
+  resize_dims: 256
+  size: 224
+  trans: True
+  bgr2rgb: True
+
+harness:
+  type: topk
+  args:
+    - name: F32
+      bmodel: $(root)/output/swin_t-1x3x224x224/swin_t_$(target)_f32/compilation.bmodel
