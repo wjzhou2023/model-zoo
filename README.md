@@ -176,7 +176,7 @@ python3 .github/workflows/check.py
 |yolov5m-6                        |[vision/detection/yolov5](vision/detection/yolov5)                                                    |:white\_check\_mark:|                    |
 |yolov5s                          |[vision/detection/yolov5](vision/detection/yolov5)                                                    |                    |:white\_check\_mark:|
 |yolov5s-4                        |[vision/detection/yolov5](vision/detection/yolov5)                                                    |:white\_check\_mark:|                    |
-|yolov5s-5                        |[vision/detection/yolov5](vision/detection/yolov5)                                                    |:white\_check\_mark:|                    |
+|yolov5s-5                        |[vision/detection/yolov5](vision/detection/yolov5)                                                    |:white\_check\_mark:|:white\_check\_mark:|
 |yolov5s-tflite                   |[vision/detection/yolov5](vision/detection/yolov5)                                                    |                    |:white\_check\_mark:|
 |yolov5x                          |[vision/detection/yolov5](vision/detection/yolov5)                                                    |                    |:white\_check\_mark:|
 |yolov5x-5                        |[vision/detection/yolov5](vision/detection/yolov5)                                                    |:white\_check\_mark:|                    |
