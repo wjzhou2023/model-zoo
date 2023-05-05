@@ -87,7 +87,7 @@ jobs:
 
       - name: LFS Pull
         run: |
-          git lfs pull --exclude '' --include 'dataset/*'
+          git lfs pull --exclude '' --include 'dataset/**'
 
       - name: Set Optional Env
         if: "${{ github.event_name == 'schedule' || \
