@@ -19,7 +19,7 @@ def test_mlir_runtime(target, mlir_runtime):
 @pytest.mark.skipif(platform.machine() == 'aarch64', reason='Aarch64 machines do not test model precision!')
 @pytest.mark.runtime
 @pytest.mark.mlir
-def test_mlir_precision_BM1684X(target, mlir_runtime, get_imagenet_val, get_cifar100, get_coco2017_val):
+def test_mlir_precision(target, mlir_runtime, get_imagenet_val, get_cifar100, get_coco2017_val):
     if not mlir_runtime['case_list']:
         logging.info(f'Skip precision test')
         return
