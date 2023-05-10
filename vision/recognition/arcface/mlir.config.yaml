@@ -1,9 +1,11 @@
 ---
 
 name: arcface
-gops: [24.21]
+
+gops: [24.21, 90.19]
 shapes:
   - [1, 3, 112, 112]
+  - [4, 3, 112, 112]
 
 mlir_transform:
   model_transform.py
@@ -12,7 +14,6 @@ mlir_transform:
     --input_shapes [$(shape_param)]
     --mean 127.5,127.5,127.5
     --scale 0.007843137,0.007843137,0.007843137
-    --keep_aspect_ratio
     --pixel_format rgb
     --test_input $(root)/dataset/samples/cat.jpg
     --test_result $(name)_top_outputs.npz
@@ -24,19 +25,18 @@ mlir_calibration:
     --input_num 100
     -o $(workdir)/$(name).calitable
 
-BM1684X:
-  deploy:
-    - model_deploy.py  --mlir $(workdir)/transformed.mlir
-        --quantize F32
-        --chip $(target)
-        --test_input $(workdir)/$(name)_in_f32.npz
-        --test_reference $(name)_top_outputs.npz
-        --model $(workdir)/$(name)_bm1684x_f32.bmodel
-    - model_deploy.py  --mlir $(workdir)/transformed.mlir
-        --quantize INT8
-        --calibration_table $(workdir)/$(name).calitable
-        --chip $(target)
-        --tolerance 0.85,0.45
-        --test_input $(workdir)/$(name)_in_f32.npz
-        --test_reference $(name)_top_outputs.npz
-        --model $(workdir)/$(name)_1684x_int8_sym.bmodel
+deploy:
+  - model_deploy.py  --mlir $(workdir)/transformed.mlir
+      --quantize F32
+      --chip $(target)
+      --test_input $(workdir)/$(name)_in_f32.npz
+      --test_reference $(name)_top_outputs.npz
+      --model $(workdir)/$(name)_$(target)_f32.bmodel
+  - model_deploy.py  --mlir $(workdir)/transformed.mlir
+      --quantize INT8
+      --calibration_table $(workdir)/$(name).calitable
+      --chip $(target)
+      --tolerance 0.80,0.35
+      --test_input $(workdir)/$(name)_in_f32.npz
+      --test_reference $(name)_top_outputs.npz
+      --model $(workdir)/$(name)_$(target)_int8_sym.bmodel
