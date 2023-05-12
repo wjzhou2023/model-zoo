@@ -130,7 +130,7 @@ python3 .github/workflows/check.py
 |ResNet50\_vd\_infer              |[vision/classification/ResNet50\_vd\_paddle](vision/classification/ResNet50_vd_paddle)                |                    |:white\_check\_mark:|
 |resnext                          |[vision/classification/ResNeXt](vision/classification/ResNeXt)                                        |:white\_check\_mark:|                    |
 |resneXt50                        |[vision/classification/ResNeXt50](vision/classification/ResNeXt50)                                    |:white\_check\_mark:|                    |
-|retinaface                       |[vision/detection/retinaface](vision/detection/retinaface)                                            |:white\_check\_mark:|                    |
+|retinaface                       |[vision/detection/retinaface](vision/detection/retinaface)                                            |:white\_check\_mark:|:white\_check\_mark:|
 |scrfd                            |[vision/detection/scrfd](vision/detection/scrfd)                                                      |                    |:white\_check\_mark:|
 |SegFormer                        |[vision/segmentation/SegFormer](vision/segmentation/SegFormer)                                        |                    |:white\_check\_mark:|
 |shufflenet\_v2                   |[vision/classification/shufflenet\_v2](vision/classification/shufflenet_v2)                           |                    |:white\_check\_mark:|
