@@ -180,6 +180,11 @@ python3 .github/workflows/check.py
 |yolov5s-tflite                   |[vision/detection/yolov5](vision/detection/yolov5)                                                    |                    |:white\_check\_mark:|
 |yolov5x                          |[vision/detection/yolov5](vision/detection/yolov5)                                                    |                    |:white\_check\_mark:|
 |yolov5x-5                        |[vision/detection/yolov5](vision/detection/yolov5)                                                    |:white\_check\_mark:|                    |
+|yolov8l                          |[vision/detection/yolov8](vision/detection/yolov8)                                                    |                    |:white\_check\_mark:|
+|yolov8m                          |[vision/detection/yolov8](vision/detection/yolov8)                                                    |                    |:white\_check\_mark:|
+|yolov8n                          |[vision/detection/yolov8](vision/detection/yolov8)                                                    |                    |:white\_check\_mark:|
+|yolov8s                          |[vision/detection/yolov8](vision/detection/yolov8)                                                    |                    |:white\_check\_mark:|
+|yolov8x                          |[vision/detection/yolov8](vision/detection/yolov8)                                                    |                    |:white\_check\_mark:|
 |yolox\_s\_300e\_coco             |[vision/detection/ppyolox](vision/detection/ppyolox)                                                  |                    |:white\_check\_mark:|
 
 ### Language

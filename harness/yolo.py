@@ -249,13 +249,87 @@ def non_max_suppression(prediction, conf_thres=0.001, iou_thres=0.3, classes=Non
 
     return output
 
+def yolov8_non_max_suppression(prediction,
+                               conf_thres=0.25,
+                               iou_thres=0.45,
+                               classes=None,
+                               agnostic=False,
+                               multi_label=False,
+                               nm=0):
+    """Non-Maximum Suppression (NMS) on inference results to reject overlapping bounding boxes
 
+    Returns:
+          list of detections, on (n,6) tensor per image [xyxy, conf, cls]
+    """
+    prediction = [prediction['1']]
+    prediction = np.concatenate(prediction,1)
+    bs = prediction.shape[0]  # batch size
+    nc = prediction.shape[1] - nm - 4  # number of classes
+    mi = 4 + nc  # mask start index
+    xc = prediction[:, 4:mi].max(1) > conf_thres  # candidates
 
-def inference(net, input_path, loops, tpu_id):
+    # Checks
+    # assert 0 <= conf_thres <= 1, f'Invalid Confidence threshold {conf_thres}, valid values are between 0.0 and 1.0'
+    # assert 0 <= iou_thres <= 1, f'Invalid IoU {iou_thres}, valid values are between 0.0 and 1.0'
+
+    # Settings
+    max_wh = 7680  # (pixels) maximum box width and height
+    max_nms = 30000  # maximum number of boxes into torchvision.ops.nms()
+    max_det = 300  # The maximum number of boxes to keep after NMS.
+    multi_label &= nc > 1  # multiple labels per box (adds 0.5ms/img)
+
+    output = [np.zeros((0, 6 + nm))] * bs
+    for xi, x in enumerate(prediction):  # image index, image inference
+        # Apply constraints
+        x = np.transpose(x)[xc[xi]]  # confidence
+
+        # If none remain process next image
+        if not x.shape[0]:
+            continue
+
+        # Detections matrix nx6 (xyxy, conf, cls)
+        box, cls, mask = x[:,:4], x[:, 4:nc+4], x[:, nc+4:]
+
+        # Box (center x, center y, width, height) to (x1, y1, x2, y2)
+        box = xywh2xyxy(box)
+
+        # Detections matrix nx6 (xyxy, conf, cls)
+        if multi_label:
+            i, j = (cls > conf_thres).nonzero(as_tuple=False).T
+            x = np.concatenate((box[i], x[i, 4 + j, None], j[:, None].astype(np.float32), mask[i]), 1)
+        else:  # best class only
+            conf = cls.max(1, keepdims=True)
+            j_argmax = cls.argmax(1)
+            j = j_argmax if j_argmax.shape == x[:, 5:].shape else \
+                np.expand_dims(j_argmax, 1)  # for argmax(axis, keepdims=True)
+            x = np.concatenate((box, conf, j.astype(np.float32), mask), 1)[conf.reshape(-1) > conf_thres]
+
+        # Check shape
+        n = x.shape[0]  # number of boxes
+        if not n:  # no boxes
+            continue
+
+        # sort by confidence
+        x_argsort = np.argsort(x[:, 4])[::-1][:max_nms]
+        x = x[x_argsort]
+
+        # Batched NMS
+        c = x[:, 5:6] * max_wh  # classes
+        boxes, scores = x[:, :4] + c, x[:, 4]  # boxes (offset by class), scores
+        i = _nms(boxes, scores, iou_thres)  # NMS
+        if len(i) > max_det:  # limit detections
+            i = i[:max_det]
+
+        output[xi] = x[i]
+
+    return output
+
+def inference(net, input_path, yolov8_nms, loops, tpu_id):
   """ Load a bmodel and do inference.
   Args:
    bmodel_path: Path to bmodel
    input_path: Path to input file
+   yolov8_nms: yolov8_nms or not
    loops: Number of loops to run
    tpu_id: ID of TPU to use
 
@@ -302,7 +376,10 @@ def inference(net, input_path, loops, tpu_id):
     else:
         output['1'] = results[0]
 
-    prediction = non_max_suppression(output, conf_thres=threshold, iou_thres=nms_threshold, classes=None)
+    if yolov8_nms:
+        prediction = yolov8_non_max_suppression(output, conf_thres=threshold, iou_thres=nms_threshold, classes=None)
+    else:
+        prediction = non_max_suppression(output, conf_thres=threshold, iou_thres=nms_threshold, classes=None)
     for i in prediction:
       if i is None:
         continue
@@ -315,7 +392,7 @@ def inference(net, input_path, loops, tpu_id):
   cap.release()
   return prediction
 
-def process(bmodel, devices, imagedir, anno, outdir):
+def process(bmodel, devices, imagedir, anno, yolov8_nms, outdir):
   with open(anno) as g:
     js = json.load(g)
   preds = []
@@ -347,7 +424,7 @@ def process(bmodel, devices, imagedir, anno, outdir):
     tested_file.append(img_p)
     processed=processed+1
     proc=proc+1
-    pred = inference(net, os.path.join(imagedir, img_p), 1, 0)
+    pred = inference(net, os.path.join(imagedir, img_p), yolov8_nms, 1, 0)
     coco91class = coco80_to_coco91_class()
     for pp in pred:
       if pp is None:
@@ -390,9 +467,10 @@ def harness_yolo(tree, config, args):
   dataset_info = config['dataset']
   imagedir = tree.expand_variables(config, dataset_info['imagedir'])
   anno = tree.expand_variables(config, dataset_info['anno'])
+  yolov8_nms = tree.expand_variables(config, dataset_info.get('yolov8_nms', False))
   devices = tree.global_config['devices']
   outdir = tree.global_config['outdir']
-  tested_file = process(bmodel, devices, imagedir, anno, outdir)
+  tested_file = process(bmodel, devices, imagedir, anno, yolov8_nms, outdir)
   result = calculate_map(anno, tested_file, outdir)
   output = result.results['bbox']
   return {k: f'{v:.2%}' for k, v in output.items()}
@@ -407,6 +485,8 @@ def main():
     '--imagedir', type=str, help='Val image path')
   parser.add_argument(
     '--anno', type=str, help='Annotation path')
+  parser.add_argument(
+    '--yolov8_nms', type=str, default=False, help='yolov8_nms or not')
   parser.add_argument('--devices', '-d',
     type=int, nargs='*', help='Devices',
     default=[0])
