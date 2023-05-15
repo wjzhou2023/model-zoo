@@ -15,6 +15,7 @@ mlir_transform:
     --input_shapes [$(shape_param)]
     --mean 0.0,0.0,0.0
     --scale 0.0039216,0.0039216,0.0039216
+    --keep_aspect_ratio
     --pixel_format rgb
     --test_result $(name)_top_outputs.npz
     --mlir $(workdir)/$(name)_transformed.mlir
