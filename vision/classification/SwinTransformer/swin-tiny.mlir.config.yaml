@@ -1,13 +1,10 @@
 ---
 
 name: swin_t
-gops: [9.0, 18.0, 36.0, 72.0]
+gops: [9.086626984]
 
 shapes:
   - [1, 3, 224, 224]
-  - [2, 3, 224, 224]
-  - [4, 3, 224, 224]
-  - [8, 3, 224, 224]
 
 model: $(home)/swin_t.onnx
 
@@ -52,4 +49,4 @@ harness:
   type: topk
   args:
     - name: F32
-      bmodel: $(root)/output/swin_t-1x3x224x224/swin_t_$(target)_f32/compilation.bmodel
+      bmodel: $(workdir)/$(name)_$(target)_f32.bmodel
