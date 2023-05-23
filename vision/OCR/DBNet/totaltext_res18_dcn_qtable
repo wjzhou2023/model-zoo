@@ -1,8 +1,0 @@
-# chip: bm1684x  mix_mode: F32
-###
-# op_name   quantize_mode
-548 F32
-input.6 F32
-561 F32
-input.1 F32
-569 F32

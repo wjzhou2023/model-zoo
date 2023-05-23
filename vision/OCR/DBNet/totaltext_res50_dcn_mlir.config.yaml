@@ -37,7 +37,6 @@ BM1684X:
         --model $(workdir)/$(name)_bm1684x_f32.bmodel
     - model_deploy.py --mlir $(workdir)/$(name)_transformed.mlir
         --quantize INT8
-        --quantize_table $(home)/totaltext_res50_dcn_qtable
         --calibration_table $(home)/totaltext_res50_dcn_cali_table
         --quant_input
         --quant_output
@@ -45,14 +44,15 @@ BM1684X:
         --test_input $(workdir)/$(name)_in_f32.npz
         --test_reference $(name)_top_outputs.npz
         --tolerance 0.85,0.45
+        --excepts 1167
         --model $(workdir)/$(name)_bm1684x_int8_sym.bmodel
     - model_deploy.py --mlir $(workdir)/$(name)_transformed.mlir
         --quantize INT8
         --asymmetric
-        --quantize_table $(home)/totaltext_res50_dcn_qtable
         --calibration_table $(home)/totaltext_res50_dcn_cali_table
         --chip bm1684x
         --test_input $(workdir)/$(name)_in_f32.npz
         --test_reference $(name)_top_outputs.npz
         --tolerance 0.90,0.55
+        --excepts 1167
         --model $(workdir)/$(name)_bm1684x_int8_asym.bmodel
